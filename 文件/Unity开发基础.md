@@ -85,7 +85,7 @@
 
 **2.1.选择目标平台**
 
-- Unity 支持多平台构建，如 Windows、Mac、iOS、Android、WebGL、主机平台等。根据项目需求选择目标平台。
+- Unity 支持多平台构建，如 Windows、Mac、iOS、Android、WebGL、主机平台、团结支持鸿蒙等。根据项目需求选择目标平台。
 
 **2.2.构建设置(Build Settings)**
 
