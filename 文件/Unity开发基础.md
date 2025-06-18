@@ -1,4 +1,4 @@
-# 一、Unity开发流程基础
+一、Unity开发流程基础
 
 
 
@@ -39,16 +39,16 @@
 | 元信息文件      | `.meta`                              | 每个资源自动生成，标识唯一性，确保引用一致性  |
 | 时间轴 / 过场   | `.playable`（内部）                  | 控制剧情播放、镜头切换、对白时序等            |
 
-- 数据配置资源（策划常用）
+- 数据配置资源（常用配置）
 
-| 类型                          | 格式               | 用途说明                                        |
-| ----------------------------- | ------------------ | ----------------------------------------------- |
-| JSON 数据                     | `.json`            | 常用于软件数据、热更新配置、镜头数据            |
-| CSV / 表格                    | `.csv`, `.xls(x)`  | 多语言文本、软件数据、步骤参数                  |
-| 文本文件                      | `.txt`, `.ini`     | 简单配置                                        |
-| XML 文件                      | `.xml`             | 结构化数据，部分老项目使用                      |
-| ScriptableObject              | `.asset`           | Unity配置、镜头数据、插件配置等，支持可视化编辑 |
-| [PlayerPrefs](Image/mono.png) | 无文件（本地存储） | 本地轻量设定，如音量、语言选择等 （写入注册表） |
+| 类型             | 格式               | 用途说明                                        |
+| ---------------- | ------------------ | ----------------------------------------------- |
+| JSON 数据        | `.json`            | 常用于软件数据、热更新配置、镜头数据            |
+| CSV / 表格       | `.csv`, `.xls(x)`  | 多语言文本、软件数据、步骤参数                  |
+| 文本文件         | `.txt`, `.ini`     | 简单配置                                        |
+| XML 文件         | `.xml`             | 结构化数据，部分老项目使用                      |
+| ScriptableObject | `.asset`           | Unity配置、镜头数据、插件配置等，支持可视化编辑 |
+| PlayerPrefs      | 无文件（本地存储） | 本地轻量设定，如音量、语言选择等 （写入注册表） |
 
 - 其他重要文件
 
@@ -79,7 +79,96 @@
 - **提高开发效率**
   - 美术、程序和策划协同制作和调试同一个预制体，节省时间并减少沟通成本。
 
+### 1.4 脚本（Scripts）
 
+- **核心作用**：控制游戏逻辑、角色行为、交互逻辑等，是项目运行的“代码大脑”。
+- **特点**：
+  - 使用 C# 编写，保存在 `.cs` 文件中；
+  - 通常划分为逻辑层（游戏逻辑）、表现层（动画、UI控制）和数据层（配置解析等）；
+  - 常见结构包括：`Manager`、`Controller`、`Service`、`Model`、`Utils` 等。
+
+------
+
+### 1.5 UI 结构（UI）
+
+- **UI 界面资源**（使用 `Canvas` 构建）包括：
+  - 面板预制体（如：`MainMenuPanel.prefab`）；
+  - UI 控制脚本（如：`MainMenuController.cs`）；
+  - 图像素材（按钮、图标、背景等）；
+  - 动画（弹入弹出、过渡效果）；
+  - 字体资源、富文本等。
+- **常用结构划分**：`UI/Prefabs/`、`UI/Scripts/`、`UI/Assets/`。
+
+------
+
+### 1.6 管理器系统（Managers）
+
+- **统一控制游戏各系统模块的生命周期和逻辑**，如：
+  - `GameManager`：游戏主流程控制；
+  - `AudioManager`：背景音乐与音效管理；
+  - `UIManager`：UI 面板切换与层级控制；
+  - `InputManager`：统一输入管理；
+  - `ObjectPoolManager`：对象池复用。
+
+------
+
+### 1.7 插件与第三方库（Plugins / Packages）
+
+- **常见形式**：
+  - `Assets/Plugins`：传统方式引入 `.dll`、`.aar`、`.so` 等插件；
+  - `Packages/manifest.json`：通过 Unity Package 管理（UPM）引入官方和第三方包；
+- **用途**：
+  - 图形、输入、热更框架（如 DOTween、UniTask、Addressables）；
+  - 编辑器工具（如 Odin、Cinemachine、TextMeshPro）。
+
+------
+
+### 1.8 脚本化资源（ScriptableObjects）
+
+- **功能**：
+  - 用于可视化配置数据，例如镜头参数；
+  - 支持 Unity Inspector 中直接编辑，便于产品调整和使用；
+- **优点**：
+  - 可持久化；
+  - 可引用；
+  - 不依赖场景。
+
+------
+
+### 1.9 配置与数据（Data / Config）
+
+- **类型**：
+  - 外部配置：`.json`、`.ini`、`.txt`、`.xml`；
+  - 内部配置：ScriptableObject；
+- **用途**：
+  - 模块配置（如环节数据配置、用户信息）；
+  - 项目基础配置（ip地址、默认设置）；
+  - 日志信息等。
+
+------
+
+### 1.10 特殊系统目录
+
+| 目录 / 文件          | 用途说明                                                     |
+| -------------------- | ------------------------------------------------------------ |
+| **Resources/**       | 可运行时通过 `Resources.Load` 动态加载的资源（不推荐大量使用） |
+| **StreamingAssets/** | 打包时原样保留的文件，如视频、配置、文本                     |
+| **Editor/**          | 自定义编辑器脚本，构建工具、检查器扩展                       |
+| **Gizmos/**          | 编辑器中辅助图形显示（如调试可视化）                         |
+| **Tests/**           | 单元测试或运行时测试代码                                     |
+| **Addressables/**    | 支持资源异步加载与远程资源更新的系统                         |
+
+
+
+------
+
+### 1.11 项目设置与元数据
+
+| 类型               | 说明                                                     |
+| ------------------ | -------------------------------------------------------- |
+| `ProjectSettings/` | Unity 编辑器记录的各项项目配置，如图形、输入、构建平台等 |
+| `Packages/`        | Unity 包管理器信息，`manifest.json` 控制包依赖           |
+| `.meta` 文件       | 每个资源文件自动生成，用于唯一标识资源（GUID）           |
 
 ## 2.项目构建
 
@@ -115,269 +204,218 @@
 
 
 
-## 1.GameObject 与组件（Component）结构
+## 1.GameObject 与组件系统
 
-#### 1.1GameObject（游戏对象）
+#### 1.1.GameObject（游戏对象）
 
-- **定义**：Unity 场景中的基础实体，***所有可见或不可见的对象都是 GameObject***。
-- **特点**：
-  - 仅是一个容器，本身不包含任何行为和渲染功能。
-  - 可以包含多个组件来赋予它功能和特性。
-  - 可以是空对象，也可以附加各种组件形成复杂实体。
+- Unity 场景中所有实体的基础单元。
+- 是一个容器，默认仅包含 `Transform` 组件。
+- 不能独立表现或交互，需通过组件赋能。
 
-#### 1.2. Component（组件）
+#### 1.2 Component（组件）
 
-- **定义**：附加在 GameObject 上的功能模块，决定该对象的表现和行为。
-- **常见组件类型**：
-  - `Transform`：位置、旋转、缩放，所有 GameObject 必备组件。
-  - `Renderer`（如 MeshRenderer、SpriteRenderer）：负责显示模型或图片。
-  - `Collider`：碰撞体，用于物理检测。
-  - `Rigidbody`：物理刚体，实现物理运动。
-  - 自定义脚本组件（继承 MonoBehaviour）：实现游戏逻辑、交互等。
+- 附加在 GameObject 上的功能模块。
+- 控制对象行为、渲染外观、响应事件等。
+- 常见组件包括：
 
-#### 1.3. 结构关系
+| 类别     | 组件示例                         | 功能说明               |
+| -------- | -------------------------------- | ---------------------- |
+| **渲染** | `MeshRenderer`、`SpriteRenderer` | 显示模型、图片         |
+| **物理** | `Rigidbody`、`Collider` 系列     | 物理运动、碰撞检测     |
+| **音频** | `AudioSource`、`AudioListener`   | 播放声音、接收声音     |
+| **灯光** | `Light`                          | 提供光照               |
+| **动画** | `Animator`、`Animation`          | 控制动作、动画状态机   |
+| **脚本** | 自定义 MonoBehaviour 脚本        | 实现业务逻辑、事件响应 |
 
-- 每个 GameObject **必须包含一个 Transform 组件**，用来确定其在世界或父对象中的空间位置。
-- 通过给 GameObject 添加不同的组件，实现多样化的功能组合。
-- 组件之间通过 GameObject 进行关联，协同工作。
 
-#### 1.4. 设计理念
 
-- **组合优于继承**
-   - Unity 采用组件化设计，通过组合不同组件实现灵活多变的对象行为，而非通过复杂继承体系。
+#### 1.3 组件结构关系图（示意）
 
-#### 1.5. 示例
+```mermaid
+graph TD
+   GO["GameObject"]
+    TR["Transform (必备)"]
+    R["Renderer"]
+    C["Collider"]
+    RB["Rigidbody"]
+    SCR["Script (MonoBehaviour)"]
+    AUD["AudioSource"]
+    CMP["...其他组件"]
 
-一个 **角色 **GameObject，可能包含的组件： 
+    GO --> TR
+    GO --> R
+    GO --> C
+    GO --> RB
+    GO --> SCR
+    GO --> AUD
+    GO --> CMP
+```
 
--  `Transform`（必备）
+#### 1.4 核心设计理念
 
-- `MeshRenderer`（显示模型）
-- `Animator`（动画控制）
-- `Rigidbody`（物理）
-- 自定义脚本（控制角色移动、攻击等）
+- **组合优于继承**：通过组件组合而非类继承来构建对象功能。
+- **解耦可复用**：组件可独立开发和测试，利于团队协作和模块化。
+
+------
+
+
 
 ## 2.Transform：位置、旋转、缩放
 
-- 每个 Unity GameObject 都自带的基础组件。
-- 控制游戏对象在场景中的**空间位置、旋转方向和大小**。
-- 是所有空间操作的基础。
+- 所有 GameObject 都必须拥有 `Transform` 组件。
+- 包含三个关键属性：
+  - `Position`：世界或局部空间的位置
+  - `Rotation`：欧拉角或四元数表示的旋转
+  - `Scale`：缩放比例
+- 父子层级关系通过 Transform 实现嵌套。
 
-## 3.场景管理
+------
 
-| 方式           | 说明                                                     | 适用场景                         |
-| -------------- | -------------------------------------------------------- | -------------------------------- |
-| 同步加载       | 立刻加载新场景，当前操作会暂停，等待加载完成             | 小型场景或加载时间短的切换       |
-| 异步加载       | 在后台加载场景，不阻塞主线程，加载过程中可显示进度或动画 | 大型场景、加载界面、提升用户体验 |
-| 多场景同时加载 | 同时加载多个场景，实现模块化设计（如UI场景 + 游戏场景）  | 复杂项目需要分层次管理场景       |
 
-## 4.UI 系统
 
-####  4.1.核心结构
+## 3. 脚本与执行顺序（MonoBehaviour）
 
-| 组件          | 作用说明                                         |
-| ------------- | ------------------------------------------------ |
-| Canvas        | UI 的根节点，所有 UI 元素的承载容器              |
-| RectTransform | UI 元素的位置、大小和锚点控制                    |
-| UI 组件       | 如 Button（按钮）、Image（图片）、Text（文本）等 |
+#### 3.1 自定义脚本组件
 
-#### 4.2.Canvas（画布）
+- 继承自 `MonoBehaviour`，可挂载到 GameObject 上。
+- 常用生命周期方法：
 
-- [Canvas](https://docs.unity3d.com/cn/current/Manual/UICanvas.html "画布")是所有 UI 元素的父对象，控制 UI 渲染方式和分辨率适配。
-- **Render Mode（渲染模式）**：
-  - Screen Space - Overlay（覆盖屏幕）
-  - Screen Space - Camera（依附摄像机）
-  - World Space（3D世界空间中的UI）
+| 方法名          | 调用时机说明                     |
+| --------------- | -------------------------------- |
+| `Awake()`       | 脚本激活时立即调用，优先级高     |
+| `Start()`       | 在第一帧更新前调用，适合初始化   |
+| `Update()`      | 每帧调用，用于处理逻辑           |
+| `FixedUpdate()` | 固定时间步长调用，适合物理逻辑   |
+| `LateUpdate()`  | 所有 Update 执行后调用，适合相机 |
+| `OnDestroy()`   | 对象销毁时调用，释放资源         |
 
-#### 4.3.UI 元素常见组件
 
-- **Button**：响应用户点击事件
-- **Image**：显示图片或背景
-- **Text / TextMeshPro**：显示文字信息
-- **Slider、Scrollbar、InputField**：交互控件
 
-#### 4.4.屏幕适配与锚点
+#### 3.2 注意事项
 
-- 使用 RectTransform 的锚点系统，实现不同分辨率和设备的自动适配。
-- 保证 UI 在各种屏幕尺寸下保持合理布局和比例。
+- 使用 `Time.deltaTime` 控制帧率无关的行为。
+- `FixedUpdate()` 不能用来检测输入（使用 Update）。
 
-#### 4.5.事件系统
+------
 
-- UI 交互依赖 EventSystem 组件，处理点击、拖拽、滑动等事件。
-- 事件通过组件（如 Button 的 OnClick）绑定对应响应函数。
+
+
+## 4. 场景管理与加载方式
+
+| 加载方式           | 说明                                                         | 使用场景                          |
+| ------------------ | ------------------------------------------------------------ | --------------------------------- |
+| `LoadScene()`      | 同步加载整个场景，主线程会卡顿                               | 体积小的场景或测试时              |
+| `LoadSceneAsync()` | 异步加载，不阻塞主线程，可显示加载进度                       | 正式项目推荐使用                  |
+| 多场景加载         | 使用 `SceneManager.LoadScene(mode=Additive)` 实现多个场景并存 | 场景分层管理（UI场景 + 逻辑场景） |
+
+------
+
+
+
+## 5. UI 系统（基于 UGUI）
+
+### 5.1 核心组件
+
+| 组件            | 功能说明                               |
+| --------------- | -------------------------------------- |
+| `Canvas`        | UI 渲染根容器，决定 UI 渲染方式        |
+| `RectTransform` | 控制 UI 元素的位置、缩放和锚点         |
+| UI 控件         | `Text`、`Image`、`Button`、`Slider` 等 |
+
+
+
+### 5.2 Canvas 渲染模式
+
+| 模式                   | 特点                                 | 应用场景               |
+| ---------------------- | ------------------------------------ | ---------------------- |
+| Screen Space - Overlay | 覆盖整个屏幕，无需摄像机             | 简单 UI、菜单          |
+| Screen Space - Camera  | 渲染在指定摄像机前方，支持景深等效果 | 动态 UI 与世界交互     |
+| World Space            | UI 位于 3D 世界中，像普通物体一样    | 游戏世界内的交互面板等 |
+
+
+
+### 5.3 屏幕适配
+
+- 使用 `CanvasScaler` 控制缩放模式。
+- 合理设置锚点和 Pivot，实现不同分辨率适配。
+- 建议使用 TextMeshPro 替代传统 Text，提供更清晰的字体渲染和多样化样式。
+
+------
+
+
+
+## 6. 渲染系统基础（简要）
+
+| 概念             | 说明                                      |
+| ---------------- | ----------------------------------------- |
+| 材质（Material） | 使用 Shader + 贴图控制外观                |
+| Shader           | 控制像素/顶点渲染逻辑，支持自定义视觉效果 |
+| 渲染管线         | 内置渲染管线（Built-in）、URP、HDRP       |
+| 光照模型         | 实时光照、烘焙光照、GI 全局光照           |
+
+------
+
+
+
+## 7. 输入系统
+
+- Unity 支持两套输入系统：
+  - 旧系统：`Input.GetKeyDown()`、`Input.GetAxis()` 等
+  - 新系统（Input System Package）：
+    - 更强的设备支持（手柄、触屏）
+    - 支持自定义 ActionMap、设备切换
+- 对复杂交互推荐使用 **新输入系统**
+
+------
+
+
+
+## 8. 资源管理与加载方式
+
+| 方式           | 特点说明                                   | 使用建议                     |
+| -------------- | ------------------------------------------ | ---------------------------- |
+| Resources.Load | 同步加载 Resources 文件夹中的资源          | 简单项目可用，不推荐大量使用 |
+| Addressables   | Unity 推荐的新资源系统，支持异步、远程加载 | 大项目/热更新项目推荐使用    |
+| AssetBundle    | 自定义打包方式，需手动管理依赖             | 老项目/自定义构建流程        |
+
+------
+
+
+
+## 9. 其他核心系统简述
+
+| 系统       | 简要说明                               |
+| ---------- | -------------------------------------- |
+| Physics    | 通过 Collider + Rigidbody 实现物理模拟 |
+| Navigation | 使用 NavMesh 实现 AI 路径寻路          |
+| Timeline   | 控制动画、相机、对白等过场内容         |
+| Animation  | 使用 Animator 控制角色动画状态切换     |
+| Lighting   | 设置环境光、实时光、光照贴图等         |
+| Profiler   | 性能分析工具，查看每帧资源耗时         |
+
+------
 
 
 
 # 三、脚本逻辑和数据交互
 
-## 1.C# 简单了解
+在 Unity 中，脚本是连接用户输入、界面交互、动画逻辑和状态切换的核心。理解脚本逻辑及其与数据的交互方式，对于构建稳定可靠的功能模块至关重要。
 
-### 1.1.脚本作用
+本章将从以下三方面介绍 Unity 中脚本的组织方式：
 
-- 用于控制游戏对象的行为和交互逻辑。
-- 实现游戏规则、动画控制、UI交互等功能。
-
-### 1.2.脚本基本结构
-
-- Unity 脚本通常继承自 `MonoBehaviour`。
-- 主要包含以下生命周期函数：
-
-| 函数名      | 触发时机                 | 作用说明               |
-| ----------- | ------------------------ | ---------------------- |
-| Awake       | 脚本实例化时调用         | 初始化数据，准备工作   |
-| Start       | 游戏开始后第一帧调用     | 逻辑启动，准备就绪     |
-| Update      | 每帧调用                 | 持续检测输入或更新状态 |
-| FixedUpdate | 固定帧率调用（物理相关） | 处理物理模拟           |
-| OnDestroy   | 脚本或对象销毁时调用     | 清理资源               |
-
-### 1.3.面向对象编程
-
-#### 面向对象基础--抽象
-
-- 抽象是指从复杂的现实世界中提取出关键的、共同的特征，忽略不必要的细节。
-- 它帮助我们聚焦于对象的本质属性和行为，而不关心具体实现细节。
-
-##### 示例-表单抽象设计
-
-##### 🧠 抽象思路
-
-表单的类型虽然样式多样，但从交互和功能层面可以抽象为两个核心类型：
-
-- **填空题（Input）**
-- **选择题（选择/多选/下拉等 Toggle）**
-
-统一这些类型背后共通的行为逻辑，抽象出通用的基类和接口以便扩展。
-
-##### 🏗️ 基础抽象结构
-
-##### `BaseAnswer`（基础答题父类）
-
-所有答题控件（输入、选择）都继承自此类，包含统一行为：
-
-```c#
-class BaseAnswer : IHintInterface {
-    // 1. 接收题目与答案数据
-    public virtual void SetData(QuestionData data);
-
-    // 2. 答案判断
-    public virtual bool CheckAnswer();
-
-    // 3. 按 T 提示（来自 IHintInterface）
-    public virtual void HintAnswer();
-
-    // 4. 错误提示
-    public virtual void ShowErrorTip();
-
-    // 5. 输入监听（用于答题状态联动）
-    public virtual void RegisterInputListener();
-
-    // 6. 禁用/启用
-    public virtual void SetInteractable(bool state);
-
-    // 7. 重置状态
-    public virtual void Reset();
-}
-```
-
-##### 📥 输入类（`InputAnswer`）
-
-```c#
-class InputAnswer : BaseAnswer {
-    override void SetData(QuestionData data) {
-        // 设置输入框文本、标题、宽度自适应
-    }
-
-    override bool CheckAnswer() {
-        // 判断用户输入与正确答案是否一致
-    }
-
-    override void HintAnswer() {
-        // 将正确答案填入输入框
-    }
-
-    override void ShowErrorTip() { ... }
-    override void RegisterInputListener() { ... }
-    override void SetInteractable(bool state) { ... }
-    override void Reset() { ... }
-}
-```
-
-------
-
-##### ✅ 选择类（`ToggleAnswer`）
-
-```c#
-class ToggleAnswer : BaseAnswer {
-    override void SetData(QuestionData data) {
-        // 创建选项 Toggle，根据数据渲染
-    }
-
-    override bool CheckAnswer() {
-        // 判断选择项与答案是否一致
-    }
-
-    override void HintAnswer() {
-        // 自动勾选正确项，取消错误项
-    }
-
-    override void ShowErrorTip() { ... }
-    override void RegisterInputListener() { ... }
-    override void SetInteractable(bool state) { ... }
-    override void Reset() { ... }
-}
-```
-
-------
-
-##### 🧩 表单容器（`FormDialog`）
-
-```c#
-class FormDialog 
-{
-    InputAnswer inputAnswer;
-    ToggleAnswer toggleAnswer;
-
-    void CheckAllAnswers() {
-        inputAnswer.CheckAnswer();
-        toggleAnswer.CheckAnswer();
-    }
-}
-```
-
-------
-
-##### 💡 提示功能抽象：`IHintInterface`
-
-```c#
-interface IHintInterface {
-    void HintAnswer();
-}
-```
-
-> 不仅仅是答题表单可用，**拖拽题 (Drag)**、**工具题 (Tool)** 等也可复用该接口。
-
-### 1.4.面向对象-继承封装多态
-
-##### 1. **继承（Inheritance）**
-
-- **概念**：子类继承父类的属性和方法，可以复用父类的代码。
-- **例子**：比如，"猫" 和 "狗" 都是 "动物"，他们继承了 "动物" 的基本属性（如吃、睡）和行为（如移动）。但是 "猫" 和 "狗" 也可以有自己的独特行为（如猫会爬树，狗会看家）。
-
-##### 2. **封装（Encapsulation）**
-
-- **概念**：把对象的属性和方法包裹在一起，对外只暴露必要的接口，隐藏内部细节。
-- **例子**：比如你用手机打电话，你只关心打电话的操作（按钮），而不需要知道手机内部如何工作（电路、信号等）。
-
-##### 3. **多态（Polymorphism）**
-
-- **概念**：同一个操作，在不同的对象上可以表现出不同的行为。
-- **例子**：比如，"动物" 都有 "叫" 的功能，但 "猫" 会“喵喵叫”，"狗" 会“汪汪叫”。通过相同的接口（叫），不同的动物表现不同。
+- **事件驱动机制**：响应用户操作
+- **状态控制流程**：处理复杂步骤逻辑
+- **脚本结构与面向对象设计**：组织行为与数据
 
 
 
-## 2.事件驱动机制
+## 3.1.事件驱动机制
 
-## Unity 事件系统组成
+#### 目的
+
+用户在界面中点击、滑动、输入等操作，驱动游戏逻辑执行。事件机制负责将这些用户操作转化为函数调用。
+
+#### Unity 事件系统组成
 
 | 组件/概念    | 说明                               |
 | ------------ | ---------------------------------- |
@@ -386,14 +424,14 @@ interface IHintInterface {
 | UI 组件事件  | Button、Toggle 等组件触发事件      |
 | 自定义事件   | 脚本中定义事件，代码间通信         |
 
-## 事件绑定方式
+#### 事件绑定方式
 
 - **编辑器绑定**
    在 `Inspector` 面板给 UI 组件的事件（如 Button 的 OnClick）绑定函数。
 - **代码绑定**
    通过脚本使用委托或事件机制动态绑定处理函数。
 
-## 示例
+#### 示例
 
 ```C#
 public Button myButton;
@@ -409,14 +447,17 @@ void OnButtonClicked() {
 
 
 
-## 3.状态控制
+## 3.2.状态控制
 
-#### 步骤状态控制
+在复杂流程或教学步骤中，常见的逻辑结构是“状态切换”，每个步骤就是一个“状态”。
 
-- 加载完场景和界面之后，需要进入具体的环节之中，每个环节会处于不同的“状态”（如进入步骤、动作①、动作②、........ 、步骤完成、退出步骤等）。
-- 状态控制用于管理这些不同状态下的行为逻辑切换。
+#### 状态控制用途
 
-####  常见状态示例
+- 控制“进入状态”“执行中”“退出状态”的切换流程。
+- 保证步骤跳转时动画、UI、逻辑正确切换。
+- 后续可扩展记录、回退、重播、跳步等功能。
+
+####  状态生命周期示意
 
 | 状态名称        | 含义                     |
 | --------------- | ------------------------ |
@@ -426,105 +467,358 @@ void OnButtonClicked() {
 | SetExitState()  | 退出状态                 |
 | OnExit()        | 离开步骤，重置步骤阶段   |
 
-#### 状态切换方式
+#### 状态控制代码示例（片段）
 
 - **状态机设计**：用有限状态机设计模式，明确定义状态和切换条件。
 
-  ```C#
-  public override void OnEnter()
-  {
-      base.OnEnter();
-      Debug.Log("进入-增加截面法-四面围套-安装模板");
-      ActionIndex++;
-  }
+```C#
+public override async void SetState(int index) {
+    switch (index) {
+        case 0:
+            // 动作一（例：工具领取--调用工具管理器处理）
+            break;
+        case 1:
+            // 动作二（例：播放动画--动画控制器处理动画播放）
+            break;
+        case 2:
+            StepController.Instance.NextStep(); // 进入下一步骤
+            break;
+    }
+}
+```
+
+> 状态进入/退出函数建议只负责“流程”，动画与表现逻辑可委托外部管理器
+
+------
+
+### 状态跳转示例（精简优化）
+
+- 支持从界面点击或代码调用方式跳转，适用于自由导航或自动流程：
+
+```C#
+// 步骤类中：控制进入与退出逻辑
+public override void OnEnter() {
+    // 进入步骤时执行初始化（例如播放动画、注册事件）
+}
+
+public override void OnExit() {
+    // 离开步骤时清理状态（例如结束动画、移除监听）
+}
+
+// 步骤管理器中：控制状态切换
+public void SetStepNode(StepBase target) {
+    curStepNode.OnExit();   // 离开当前步骤
+    curStepNode = target;   // 切换到新步骤
+    curStepNode.OnEnter();  // 进入新步骤
+}
+```
+
+> 每个步骤就像一个**独立小流程单元**：
+>  它知道“自己进来时要做什么”，“退出时要收尾什么”。这种结构可以自由跳转任意步骤，不会出现状态错乱或残留问题。
+
+
+
+## 3.3.C# 简单了解
+
+### 3.3.1.脚本作用
+
+- 用于控制游戏对象的行为和交互逻辑。
+- 实现游戏规则、动画控制、UI交互等功能。
+
+### 3.3.2.脚本基本结构
+
+- Unity 脚本通常继承自 [`MonoBehaviour`](Image/mono.png)。
+- 主要包含以下生命周期函数：
+
+| 函数名      | 触发时机                 | 作用说明               |
+| ----------- | ------------------------ | ---------------------- |
+| Awake       | 脚本实例化时调用         | 初始化数据，准备工作   |
+| Start       | 游戏开始后第一帧调用     | 逻辑启动，准备就绪     |
+| Update      | 每帧调用                 | 持续检测输入或更新状态 |
+| FixedUpdate | 固定帧率调用（物理相关） | 处理物理模拟           |
+| OnDestroy   | 脚本或对象销毁时调用     | 清理资源               |
+
+
+
+## 3.4. 面向对象编程（OOP）
+
+> 面向对象是一种**构建逻辑模块和功能组件**的思维方式，核心在于将现实中的事物转换为**“对象”**，每个对象具有自己的属性与行为。
+
+### 3.4.1 基础概念-抽象：
+
+> **抽象**指的是：从复杂的现实中提取“共同特征”，形成统一的逻辑模板，忽略无关细节。
+
+#### 目的：
+
+- 将复杂逻辑“模块化”
+- 减少重复开发
+- 保证结构一致，易于维护和扩展
+
+------
+
+### 例：表单答题逻辑的抽象设计
+
+一个项目中有多种题型，如：
+
+- **填空题**：输入答案
+- **单选、多选题**：点击选项
+- **下拉选择题**：从选项中挑选
+
+这些虽然形式不同，但其核心交互行为可以抽象为两个**基础类型**：
+
+| 题型样式         | 抽象归类              |
+| ---------------- | --------------------- |
+| 填空、填表       | 输入类 `InputAnswer`  |
+| 单选、多选、下拉 | 选择类 `ToggleAnswer` |
+
+这些题型可统一为两个核心类型：`输入类` 和 `选择类`，并共用统一的基类行为。
+
+------
+
+### 抽象结构图
+
+```mermaid
+classDiagram
+    class BaseAnswer-父类 {
+        +SetData(data)初始化
+        +CheckAnswer()检查答案
+        +HintAnswer()提示
+        +ShowErrorTip()显示错误提示
+        +Reset()重置
+    }
+
+    class InputAnswer-填空类
+    class ToggleAnswer-单选多选类
+    class FormDialog-表单
+
+    BaseAnswer-父类 <|-- InputAnswer-填空类
+    BaseAnswer-父类 <|-- ToggleAnswer-单选多选类
+    FormDialog-表单 --> InputAnswer-填空类
+    FormDialog-表单 --> ToggleAnswer-单选多选类
+```
+
+------
+
+### 类功能详解
+
+#### `BaseAnswer`（答题基类）
+
+封装所有题型的公共逻辑，其他答题类型都继承自此类。
+
+```c#
+class BaseAnswer : MonoBehaviour {
+    public virtual void SetData(QuestionData data);        // 绑定题目数据
+    public virtual bool CheckAnswer();                     // 判断正误
+    public virtual void HintAnswer();                      // 显示正确答案提示 (按T提示)
+    public virtual void ShowErrorTip();                    // 显示错误提示
+    public virtual void Reset();                           // 重置答题状态
+    
+    private void Update()
+    {
+        if (!DataManager.Instance.depPromptSwitch)return;//禁用提示
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            HintAnswer(); // 提示答案
+        }
+    }
+}
+```
+
+------
+
+####  `InputAnswer`（输入题类型）
+
+如填空题，核心行为是输入文本并比对正确答案。
+
+```C#
+class InputAnswer : BaseAnswer {
+    override void SetData(QuestionData data) {
+        //Todo 设置题目文本、输入框宽度自适应
+    }
+
+    override bool CheckAnswer() {
+        //Todo 检查用户输入的答案是否匹配答案
+    }
+
+    override void HintAnswer() {
+        //Todo 填入正确答案 (按T提示)
+    }
+
+    override void ShowErrorTip() { ... }
+    override void Reset() { ... }
+}
+```
+
+------
+
+####  `ToggleAnswer`（选择题类型）
+
+如单选、多选、下拉题，核心是创建选项并对比正确项。
+
+```C#
+class ToggleAnswer : BaseAnswer {
+    override void SetData(QuestionData data) {
+        //Todo 根据题目数据创建选项
+    }
+
+    override bool CheckAnswer() {
+        //Todo 判断当前的选择是否正确
+    }
+
+    override void HintAnswer() {
+        //TOdo 勾选正确项，取消错误项 (按T提示)
+    }
+
+    override void ShowErrorTip() { ... }
+    override void Reset() { ... }
+}
+```
+
+------
+
+####  `FormDialog`（题目容器）
+
+用于组织和管理所有题型组件，并统一调用判断、提示等操作。
+
+```C#
+class FormDialog 
+{
+    List<BaseAnswer> baseAnswers;//例如： baseAnswers 存储了1个填空，2个多选，一个下拉
+
+    public override void OnClick(GameObject go)
+    {
+        switch (go.name)
+        {
+            case "Button_Confirm":
+                foreach (var t in baseAnswers)
+                {
+                    t.CheckAnswer() //在表单中无需关心题目是什么类型，统一调用 BaseAnswer 父类的 CheckAnswer。
+                }
+                break;
+        }
+    }
+}
+```
+
+------
+
+####  案例抽象设计带来的好处
+
+| 优势           | 说明                                                         |
+| -------------- | ------------------------------------------------------------ |
+| 结构统一       | 所有题型都基于同一个父类结构                                 |
+| 易于新增题型   | 添加新题型只需继承 `BaseAnswer` 并实现自己的逻辑             |
+| 易于维护       | 修改或优化某一共性功能，只需改动 `BaseAnswer`，例：需要控制是否启用提示功能 |
+| 灵活提示与联动 | 通过接口统一处理提示逻辑、交互状态                           |
+| 快速搭建表单   | 新增表单不需要再处理  **`题目逻辑`**  以及  **`题目样式`**，只需要处理表单样式的搭建和表单的逻辑 |
+
+
+
+##  3.4 面向对象三大特性
+
+面向对象编程有三个核心特性：
+
+- **继承**：复用已有能力
+- **封装**：只暴露“该看的”部分
+- **多态**：相同的操作，不同的行为表现
+
+
+
+### 3.4.1. 继承（Inheritance）——“孩子像父母”
+
+- **通俗解释：**
+   子类自动拥有父类的功能，就像孩子天然继承父母的基因。
+
+- **举例类比：**
+
+  - “动物”都会吃和睡
+  - “猫” 和 “狗” 都是动物，但也各自有特长：猫会爬树、狗会看家
+
+- **现实例子：**
+   做多个答题组件（如填空题、选择题）时，它们都继承了 `BaseAnswer` 的通用功能（如判断答案、提示、重置等），只需补充自己的特色功能。
+
+- **示意图：**
+
+  ```mermaid
+  classDiagram
+      class BaseAnswer {
+          +CheckAnswer()检查答案
+          +HintAnswer()提示
+          +Reset()重置
+      }
+      class InputAnswer {
+          +SetCaretWidth()设置光标宽度
+      }
+      class ToggleAnswer {
+          +SetTransition()设置缓动样式
+      }
   
-  public override void SetEnterState()
-  {
-      base.SetEnterState();
-      JGSGSceneManager.Instance.KeepAnimationClipStart("长动画分段", "安装模板");
-  }
-  
-  public override async void SetState(int index)
-  {
-      base.SetState(index);
-      switch (index)
-      {
-           case 0:
-              //动作一
-              ActionIndex++;
-           break;
-           case 1:
-              //动作二
-              ActionIndex++;
-           break;
-           case 2:
-              StepController.Instance.NextStep();
-           break;
-       }
-  }
-  
-  public override void SetExitState()
-  {
-      base.SetExitState();
-      JGSGSceneManager.Instance.KeepAnimationClipEnd("长动画分段", "安装模板");
-  }
-  
-  public override void OnExit()
-  {
-      base.OnExit();
-      Debug.Log("退出-增加截面法-四面围套-安装模板");
-  }
+      BaseAnswer <|-- InputAnswer
+      BaseAnswer <|-- ToggleAnswer
   ```
 
-- **条件触发**：根据点击步骤操作或事件触发，改变当前状态。
+------
 
-  ```
-  //当前步骤的步骤类
-  private StepBase curStepNode;
-  //跳转到某个步骤（传入跳转的步骤类）
-  public void SetStepNode(StepBase target)
-  {
-      //调用当前步骤-离开方法，重置当前步骤
-  	curStepNode.OnExit();
-      var index = stepNodes.IndexOf(target);
-  	for (var i = stepNodes.Count - 1; i >= 0; i--)
-  	{
-  	    if (i >= index)
-   	   {
-              //调用当前步骤之后（包含当前步骤）所有步骤的-开始状态，重置后面步骤的动画到初始状态
-         		stepNodes[i].SetEnterState();
-   	   }
-  	}
-  	for (var i = 0; i < stepNodes.Count; i++)
-  	{
-   	   if (i < index)
-    	  {
-             //调用当前步骤之前所有步骤的-结束状态，重置前面步骤的动画到结束状态
-    	  	   stepNodes[i].SetExitState();
-    	  }
-  	}
-      //赋值跳步的步骤为当前步骤
-  	curStepNode = target;
-      //调用当前步骤的进入方法
-  	curStepNode.OnEnter();
-  }
-  //进入到下一步骤
-  public void NextStep()
-  {
-      //重置当前步骤--动画状态--结束
-      curStepNode.SetExitState();
-      //调用当前步骤-离开方法，重置当前步骤
-  	curStepNode.OnExit();
-      //赋值跳步的步骤为当前步骤
-  	curStepNode = target;
-      //重置当前步骤--动画状态--开始
-      curStepNode.SetEnterState();
-      //调用当前步骤的进入方法
-  	curStepNode.OnEnter();
-  }
+### 3.4.2. 封装（Encapsulation）——“只看得见按钮，看不见电路”
+
+- **通俗解释：**
+   把复杂内容包在“盒子”里，只开放必要的操作，内部怎么实现用户不需要关心。
+- **现实例子：**
+   手机打电话只需要按拨号键，不用关心电路和信号处理。
+   在程序中，外部系统（表单）仅调用 `CheckAnswer()` 就能实现  **`判断对错、错误提示、记录留痕`**，表单不必知道是如何进行的答案比对、怎么处理错误UI显示、以及如何发送留痕等。
+- **产品意义：**
+  - 不暴露复杂内部逻辑
+  - 更稳定，别人不会“误操作”
+  - 易于维护，内部可自由调整
+
+------
+
+### 3.4.3. 多态（Polymorphism）——“同样的按钮，不同的反应”
+
+- **通俗解释：**
+   同一个操作，在不同对象上有不同表现。
+
+- **现实例子：**
+
+  - “点击播放”：音乐播放器播放音乐，视频播放器播放视频
+
+- **在项目中：**
+
+  - 所有答题组件都实现了 `HintAnswer()` 方法
+  - 调用时，不用关心具体题型，只管调用 `HintAnswer()`，不同类型自己决定该如何提示
+
+- **结构类图复用：**
+
+  ```mermaid
+  classDiagram
+    class BaseAnswer {
+        +HintAnswer()
+    }
+  
+    class InputAnswer {
+        +HintAnswer() // 自动填入文本
+    }
+  
+    class ToggleAnswer {
+        +HintAnswer() // 自动勾选正确选项
+    }
+  
+    BaseAnswer <|.. InputAnswer
+    BaseAnswer <|.. ToggleAnswer
   ```
 
-> 步骤状态控制，保证步骤跳转正常，以及后续功能实现，例：现在需要实现环节记录功能，退出环节
+------
+
+### 面向对象总结
+
+| 特性     | 理解                                   | 对产品的帮助与价值                                   |
+| -------- | -------------------------------------- | ---------------------------------------------------- |
+| **抽象** | 把复杂功能拆成通用模块和核心要素       | 设计功能时更清晰，减少冗余需求，便于统一规划和管理   |
+| **继承** | 新功能基于已有功能扩展，不用从零开始   | 新产品需求或新题型能快速上线，提升开发效率和响应速度 |
+| **封装** | 复杂功能对外表现简单接口，隐藏内部实现 | 产品使用和维护更简单，降低误用风险，提升系统稳定性   |
+| **多态** | 同一操作对不同功能产生不同效果         | 产品交互统一，用户体验一致，同时支持多样化功能扩展   |
+
+
 
 
 
@@ -548,10 +842,10 @@ void OnButtonClicked() {
 
 | 类型         | 表现                         | 说明                               |
 | ------------ | ---------------------------- | ---------------------------------- |
-| CPU 过载     | 帧率不稳定，游戏逻辑响应变慢 | 脚本计算量大，Update 函数耗时过多  |
 | GPU 过载     | 渲染延迟，画面卡顿           | 过多高精度模型、复杂特效、过大贴图 |
 | 内存不足     | 加载缓慢，频繁卡顿，崩溃     | 资源未及时释放，内存泄漏           |
 | 磁盘 IO 瓶颈 | 加载时间长，场景切换卡顿     | 资源加载频繁或单次加载资源体积大   |
+| CPU 过载     | 帧率不稳定，游戏逻辑响应变慢 | 脚本计算量大，Update 函数耗时过多  |
 
 #### 具体影响因素
 
@@ -572,7 +866,7 @@ void OnButtonClicked() {
 
 #### 5. 产品关注点
 
-- 识别卡顿和掉帧时间点，定位对应场景或功能。
+- 识别卡顿和掉帧时间点，定位对应场景或功能点。
 - 配合开发确认性能指标与优化方案。
 - 规划合理资源预算，避免超出设备承载。
 
@@ -736,4 +1030,6 @@ flowchart LR
 | **频繁提交更新**     | 小步快跑，减少大批量冲突概率。                         |
 | **使用场景合并工具** | 采用专业工具（如 Unity 的 Smart Merge）辅助解决冲突。  |
 | **及时沟通协调**     | 出现冲突时快速沟通，合理安排修改时序。                 |
+
+
 
