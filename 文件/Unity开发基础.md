@@ -1,4 +1,4 @@
-一、Unity开发流程基础
+# 一、Unity开发流程基础
 
 
 
@@ -8,9 +8,9 @@
 
 ### 1.1场景
 
-- 场景是一个**虚拟空间**，用于承载**物体对象**（GameObject）、光源、摄像机、UI 界面等元素。
+- 场景是一个**虚拟空间**，用于承载**物体对象**（GameObject）、光源、摄像机、UI 界面等元素。![](Image/NewEmptyScene_01.png)
 
-
+------
 
 ### 1.2资源
 
@@ -52,32 +52,22 @@
 
 - 其他重要文件
 
-| 类型     | 文件名 / 格式                 | 用途说明                             |
-| -------- | ----------------------------- | ------------------------------------ |
-| 脚本文件 | `.cs`（C# 语言）              | 控制程序逻辑、交互、行为             |
-| 插件文件 | `.dll`, `.aar`, `.jar`, `.so` | 引入第三方库（如 SDK、广告、支付等） |
+| 类型     | 文件名 / 格式                 | 用途说明                 |
+| -------- | ----------------------------- | ------------------------ |
+| 脚本文件 | `.cs`（C# 语言）              | 控制程序逻辑、交互、行为 |
+| 插件文件 | `.dll`, `.aar`, `.jar`, `.so` | 引入第三方库、插件       |
 
+------
 
+### 1.3预制体-模板
 
-### 1.3预制体
+- **省时省力**：一个做好的物体（如输入框、按钮、模型预制体）可以反复使用，不用重复制作。
+- **统一修改**：改一次预制体，所有使用它的地方都会一起更新。
+- **让场景更整洁**：把复杂内容打包成一个“盒子”，场景更清晰好管理。
+- **支持动态生成**：软件运行时也能创建，比如动态创建步骤列表。
+- **便于协作**：预制体是独立文件，程序、美术、产品都能同时参与，减少冲突。
 
-- **复用性强**
-  - 预制体是已经配置好属性和组件的游戏对象模板，可以在项目中多次实例化，避免重复制作相同对象。
-
-- **统一管理和批量修改**
-  - 修改预制体资源，会同步更新所有场景中该预制体的实例，方便维护和统一调整。
-
-- **场景整洁和结构清晰**
-  - 通过使用预制体，把复杂的对象组合封装起来，使场景层级更简洁，便于管理。
-
-- **支持动态加载和实例化**
-  - 可以在游戏运行时，通过代码动态加载预制体并生成对象，实现灵活的游戏逻辑和资源管理。
-
-- **版本控制友好**
-  - 预制体文件独立保存，便于与版本管理系统配合使用，避免大规模场景文件冲突。
-
-- **提高开发效率**
-  - 美术、程序和策划协同制作和调试同一个预制体，节省时间并减少沟通成本。
+------
 
 ### 1.4 脚本（Scripts）
 
@@ -118,7 +108,7 @@
   - `Assets/Plugins`：传统方式引入 `.dll`、`.aar`、`.so` 等插件；
   - `Packages/manifest.json`：通过 Unity Package 管理（UPM）引入官方和第三方包；
 - **用途**：
-  - 图形、输入、热更框架（如 DOTween、UniTask、Addressables）；
+  - 图形、输入、热更框架（如 DOTween、UniTask、YooAsset）；
   - 编辑器工具（如 Odin、Cinemachine、TextMeshPro）。
 
 ------
@@ -149,14 +139,14 @@
 
 ### 1.10 特殊系统目录
 
-| 目录 / 文件          | 用途说明                                                     |
-| -------------------- | ------------------------------------------------------------ |
-| **Resources/**       | 可运行时通过 `Resources.Load` 动态加载的资源（不推荐大量使用） |
-| **StreamingAssets/** | 打包时原样保留的文件，如视频、配置、文本                     |
-| **Editor/**          | 自定义编辑器脚本，构建工具、检查器扩展                       |
-| **Gizmos/**          | 编辑器中辅助图形显示（如调试可视化）                         |
-| **Tests/**           | 单元测试或运行时测试代码                                     |
-| **Addressables/**    | 支持资源异步加载与远程资源更新的系统                         |
+| 目录 / 文件          | 用途说明                                     |
+| -------------------- | -------------------------------------------- |
+| **Resources/**       | 可运行时通过 `Resources.Load` 动态加载的资源 |
+| **StreamingAssets/** | 打包时原样保留的文件，如视频、配置、文本     |
+| **Editor/**          | 自定义编辑器脚本，构建工具、检查器扩展       |
+| **Gizmos/**          | 编辑器中辅助图形显示（如调试可视化）         |
+| **Tests/**           | 单元测试或运行时测试代码                     |
+| **Addressables/**    | 支持资源异步加载与远程资源更新的系统         |
 
 
 
@@ -170,33 +160,46 @@
 | `Packages/`        | Unity 包管理器信息，`manifest.json` 控制包依赖           |
 | `.meta` 文件       | 每个资源文件自动生成，用于唯一标识资源（GUID）           |
 
+
+
 ## 2.项目构建
 
-**2.1.选择目标平台**
+### **2.1.选择目标平台**
 
-- Unity 支持多平台构建，如 Windows、Mac、iOS、Android、WebGL、主机平台、团结支持鸿蒙等。根据项目需求选择目标平台。
+- Unity 支持多平台构建，如 Windows、Mac、Linux、iOS、Android、WebGL、主机平台、团结支持鸿蒙等。根据项目需求选择目标平台。
 
-**2.2.构建设置(Build Settings)**
+### **2.2.构建设置(Build Settings)**
 
 - 场景选择：决定哪些场景会被打包进最终包
 - 目标平台：选择发布平台（例如 Android）
 - 构建选项：是否开启压缩、开发者模式、脚本调试等
 
-**2.3.压缩与资源打包**
+### **2.3.压缩与资源打包**
 
 - 开启压缩能减少包体积，但会增加加载时间和打包时间
-- 资源是否分包（AssetBundle/Addressables）影响更新和加载效率，合理分包***（加载存在卡顿，资源过大或者资源包包含文件过多需要分包）***
+- 资源是否分包（AssetBundle/Addressables）影响更新和加载效率，合理分包***（加载存在卡顿，资源过大或者资源包包含文件过多需要分包）
 
-**2.4.代码裁剪和优化**
+<img src="Image/BuildSettings_01.png" style="float: left; width: 500px; margin-right: 10px;" />
 
-- IL2CPP vs Mono（脚本后端选择）
-- 代码剥离（Strip Engine Code）减少包体积
-
-
-
-> Unity资源收集原理：收集已选择场景中的资源以及资源关联的资源、Resources文件夹中的资源（使用时通过`Resources.Load()` 加载）、C#脚本，全部打入exe之中。
+> Unity资源打包原理：
 >
-> 热更构建：根据收集原理，仅收集一个启动场景（启动场景只包含下载界面），Resources文件夹不放资源，所有其他所有资源收集到AB包，使用AB包加载替代Resources加载，代码分为AOT层和Hotfix层，构建的exe中只包含插件、启动场景和AOT层代码。
+> - 场景里用到的资源（如图片、模型、声音等）
+> - 被这些资源**间接引用**到的其他资源
+> - Resources 文件夹里的所有资源（不管用没用到）
+> - 所有代码（C# 脚本）
+
+---
+
+> 热更构建：
+>
+> - 程序中只打一个**启动场景**，比如下载界面，体积很小。
+> - Resources 文件夹**不再放资源**，避免把资源固定打进程序里。
+> - 所有资源都单独打成**AB包**（类似“资源模块”），可以在游戏运行时按需下载。
+> - 程序代码分两层：
+>   - **AOT层**：放在程序里，不能更新（基础能力）
+>   - **热更层（Hotfix）**：可远程更新，支持迭代功能
+>
+> 最终程序包（exe）只包含启动界面 + 基础功能，**其他内容运行时再下载更新**，更灵活、体积更小。
 
 
 
@@ -218,16 +221,14 @@
 - 控制对象行为、渲染外观、响应事件等。
 - 常见组件包括：
 
-| 类别     | 组件示例                         | 功能说明               |
-| -------- | -------------------------------- | ---------------------- |
+|   类别   | 组件示例                         | 功能说明               |
+| :------: | :------------------------------- | ---------------------- |
 | **渲染** | `MeshRenderer`、`SpriteRenderer` | 显示模型、图片         |
 | **物理** | `Rigidbody`、`Collider` 系列     | 物理运动、碰撞检测     |
 | **音频** | `AudioSource`、`AudioListener`   | 播放声音、接收声音     |
 | **灯光** | `Light`                          | 提供光照               |
 | **动画** | `Animator`、`Animation`          | 控制动作、动画状态机   |
 | **脚本** | 自定义 MonoBehaviour 脚本        | 实现业务逻辑、事件响应 |
-
-
 
 #### 1.3 组件结构关系图（示意）
 
@@ -262,6 +263,8 @@ graph TD
 
 ## 2.Transform：位置、旋转、缩放
 
+###### ![Transform](Image\Transform.png)
+
 - 所有 GameObject 都必须拥有 `Transform` 组件。
 - 包含三个关键属性：
   - `Position`：世界或局部空间的位置
@@ -273,9 +276,195 @@ graph TD
 
 
 
-## 3. 脚本与执行顺序（MonoBehaviour）
+## 3. 场景管理与加载方式
 
-#### 3.1 自定义脚本组件
+#### 场景加载
+
+| 加载方式           | 说明                                                         | 使用场景                          |
+| ------------------ | ------------------------------------------------------------ | --------------------------------- |
+| `LoadScene()`      | 同步加载整个场景，主线程会卡顿                               | 体积小的场景或测试时              |
+| `LoadSceneAsync()` | 异步加载，不阻塞主线程，可显示加载进度                       | 正式项目推荐使用                  |
+| 多场景加载         | 使用 `SceneManager.LoadScene(mode=Additive)` 实现多个场景并存 | 场景分层管理（UI场景 + 逻辑场景） |
+
+#### 资源加载
+
+| 方式           | 特点说明                                   | 使用建议                     |
+| -------------- | ------------------------------------------ | ---------------------------- |
+| Resources.Load | 同步加载 Resources 文件夹中的资源          | 适用于小型项目或少量资源加载 |
+| AssetBundle    | 需要手动管理资源依赖和版本控制，灵活但复杂 | 中大型项目/热更新项目使用    |
+
+------
+
+
+
+## 4. UI 系统（基于 UGUI）
+
+### 核心组件
+
+| 组件            | 功能说明                                         |                                 |
+| --------------- | ------------------------------------------------ | ------------------------------- |
+| `Canvas`        | UI 渲染根容器，决定 UI 渲染模式                  |                                 |
+| `RectTransform` | 控制 UI 元素的位置、缩放和锚点                   | ![](Image\UI_RectTransform.png) |
+| UI 控件         | `Text`、`Image`、`Button`、`Toggle`、`Slider` 等 |                                 |
+
+
+
+### Canvas 渲染模式
+
+| 模式                   | 特点                                 | 应用场景                                         | 图片                            |
+| ---------------------- | ------------------------------------ | ------------------------------------------------ | ------------------------------- |
+| Screen Space - Overlay | 覆盖整个屏幕，无需摄像机             | 简单 UI、菜单                                    | ![](Image/CanvasOverlay.png)    |
+| Screen Space - Camera  | 渲染在指定摄像机前方，支持景深等效果 | 动态 UI 与世界交互                               | ![](Image/CanvasCamera.png)     |
+| World Space            | UI 位于 3D 世界中，像普通物体一样    | 场景内的交互面板等（例：文字标签、检测盖章表单） | ![](Image/CanvasWorldSpace.png) |
+
+
+
+### 屏幕适配
+
+- 使用 `CanvasScaler` 控制缩放模式。
+
+<img src="Image/CanvasScaler.gif" style="float: left; width: 400px; margin-right: 10px;" />
+
+- **UI Scale Mode**确定画布中的 UI 元素的缩放方式。
+
+| 属性                       | 功能                                                         | 图例                                                         |
+| -------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Constant Pixel Size**    | 无论屏幕大小如何，UI 元素都保持相同的 **像素大小**。         | <img src="Image/ConstantPixel Size.gif" style=" width: 300px; margin-right: 10px;"/> |
+| **Scale With Screen Size** | 屏幕越大，UI 元素越大。                                      | <img src="Image/Scale With Screen Size.gif" style=" width: 300px; margin-right: 10px;"/> |
+| **Constant Physical Size** | 无论屏幕大小和分辨率如何，UI 元素都保持相同的 **物理大小**，与**Constant Pixel Size**类似，只是位置和大小以物理单位指定，例如毫米、点或派卡。 | <img src="Image/ConstantPixel Size.gif" style=" width: 300px; margin-right: 10px;"/> |
+
+
+
+- 合理设置锚点和 Pivot，实现不同分辨率适配。
+
+<img src="Image/UI_Anchored2.gif" style="float: left; width: 300px; margin-right: 10px;" />
+
+<img src="Image/UI_Anchored3.gif" style="float: left; width: 300px; margin-right: 10px;" />
+
+------
+
+
+
+## 5. 渲染系统基础
+
+| 概念             | 说明                                                         |                                                              |                                                              |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 材质（Material） | 使用 Shader + 贴图控制外观                                   | <img src="Image/Material.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
+| Shader           | 控制像素/顶点渲染逻辑，支持自定义视觉效果                    | <img src="Image/Shader2.gif" style=" width: 300px; margin-right: 10px;"/> | <img src="Image/Shader1.gif" style=" width: 300px; margin-right: 10px;"/> |
+| 渲染管线         | 内置渲染管线（Built-in）、URP、HDRP                          |                                                              |                                                              |
+| 光照模型         | 实时光照、烘焙光照、混合光照、GI 全局光照                    | <img src="Image/LightModes.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
+| 屏幕后处理       | 增加真实感、风格统一，通过抗锯齿、模糊、锐化等技术改善画面细节 | <img src="Image/Houchuli.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
+
+------
+
+
+
+## 6.物理系统
+
+Unity 实现了两个独立的物理系统：
+
+| 系统类型        | 引擎         | 用于             |
+| --------------- | ------------ | ---------------- |
+| **3D 物理系统** | NVIDIA PhysX | 用于 3D 游戏场景 |
+| **2D 物理系统** | Box2D        | 用于 2D 游戏场景 |
+
+### 核心概念
+
+| 概念                                | 说明                                                 |                                                              |
+| ----------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------ |
+| **刚体（Rigidbody / Rigidbody2D）** | 控制物体受物理规则（如重力、力、速度）影响。         | <img src="Image/Rigidbody.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **碰撞体（Collider / Collider2D）** | 定义物体形状，用于碰撞检测，不可见。                 | <img src="Image/Collider.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **触发器（Trigger）**               | 一种特殊碰撞体，不产生物理反应，仅触发事件。         | <img src="Image/Trigger.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **力（Force）**                     | 通过 AddForce 作用于刚体，让物体产生加速度。         | <img src="Image/Force.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **重力（Gravity）**                 | 全局重力可通过 Project Settings 设置，影响所有刚体。 |                                                              |
+| **物理材质（PhysicMaterial）**      | 设置摩擦力、弹力等参数，模拟真实表面行为。           | <img src="Image/PhysicsMat1.gif" style=" width: 300px; margin-left: 10px;" /> |
+
+### 常用组件
+
+#### 3D 物理组件
+
+| 组件                                           | 功能                                                       |                                                              |
+| ---------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| Rigidbody                                      | 添加质量、速度、重力等参数。                               |                                                              |
+| BoxCollider / SphereCollider / CapsuleCollider | 定义几何形状的碰撞区域。                                   | <img src="Image/AllCollider.png" style=" width: 300px; margin-left: 10px;" /> |
+| MeshCollider                                   | 使用模型网格定义复杂碰撞体（可选是否使用碰撞网格的凸包）。 | <img src="Image/MeshCollider.png" style=" width: 300px; margin-left: 10px;" /> |
+| CharacterController                            | 用于角色移动控制器，内建碰撞检测，非物理驱动。             | <img src="Image/CharacterController.jpg" style=" width: 300px; margin-left: 10px;" /> |
+| Joint（关节）                                  | 模拟弹簧、连接、旋转限制等机械结构。                       | <img src="Image/Joint.gif" style=" width: 300px; margin-left: 10px;" /> |
+
+#### 2D 物理组件
+
+| 组件                                                 | 功能               |
+| ---------------------------------------------------- | ------------------ |
+| Rigidbody2D                                          | 控制 2D 刚体行为。 |
+| BoxCollider2D / CircleCollider2D / PolygonCollider2D | 定义2D碰撞体。     |
+| PhysicsMaterial2D                                    | 控制摩擦与弹性。   |
+| HingeJoint2D / DistanceJoint2D 等                    | 用于构建连接结构。 |
+
+---
+
+
+
+## 7.动画系统
+
+Unity 动画系统是控制模型动作、UI 动效、角色行为的关键系统，包含多种方式：
+
+| 类型                  | 系统                           | 用途                             |                                                              |
+| --------------------- | ------------------------------ | -------------------------------- | ------------------------------------------------------------ |
+| **传统 Animation**    | Animation + AnimationClip      | 简单动画（UI、物体移动等）       | <img src="Image/Animation.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **Mecanim 动画系统**  | Animator + Animator Controller | 角色动画、状态切换（主流方式）   | <img src="Image/Animator.gif" style=" width: 300px; margin-left: 10px;" /> |
+| **Timeline 动画轨道** | Timeline + PlayableDirector    | 剧情动画、过场动画、相机轨道控制 | <img src="Image/TimeLine.gif" style=" width: 300px; margin-right: 10px;" /> |
+| **程序动画**          | 脚本中控制变换或使用 DOTween   | 动画更灵活，常用于 UI 动效       | <img src="Image/DoTween.gif" style=" width: 300px; margin-right: 10px;" /> |
+
+------
+
+### Animator 系统组成（Mecanim）
+
+| 组件                    | 说明                                                    |
+| ----------------------- | ------------------------------------------------------- |
+| **Animator**            | 绑定在角色对象上，驱动动画状态。                        |
+| **Animator Controller** | 状态机图（State Machine），定义多个动画状态及切换条件。 |
+| **Animation Clip**      | 单个动画片段，通常由外部建模工具导入（如 `.fbx`）。     |
+| **Avatar**              | 骨骼映射系统，用于将动画与模型骨骼对齐。                |
+
+### 状态机控制逻辑
+
+| 元素                   | 说明                                              |
+| ---------------------- | ------------------------------------------------- |
+| **State（状态）**      | 每个动画片段是一个状态节点。                      |
+| **Transition（过渡）** | 控制状态切换条件（可用参数驱动）。                |
+| **Parameters（参数）** | 支持 Float、Int、Bool、Trigger 等，控制动画切换。 |
+
+```C#
+animator.SetBool("isRun", true); // 驱动动画切换
+```
+
+------
+
+### 动画融合（Blend Tree）
+
+- 用于将多个动画混合（如跑步与方向转身）
+- 支持按参数插值融合不同方向动画，提升平滑性
+
+<img src="Image/BlendTree.gif" style=" width: 300px; margin-left: 10px;" />
+
+
+
+## 8. 输入系统
+
+- Unity 支持两套输入系统：
+  - 旧系统：`Input.GetKeyDown()`、`Input.GetAxis()` 等
+  - 新系统（Input System Package）：
+    - 更强的设备支持（手柄、触屏）
+    - 支持自定义 ActionMap、设备切换
+- 对复杂交互推荐使用 **新输入系统**
+
+------
+
+
+
+## 9. 脚本与执行顺序[(MonoBehaviour)](Image/mono1.png)
+
+#### 自定义脚本组件
 
 - 继承自 `MonoBehaviour`，可挂载到 GameObject 上。
 - 常用生命周期方法：
@@ -291,7 +480,7 @@ graph TD
 
 
 
-#### 3.2 注意事项
+#### 注意事项
 
 - 使用 `Time.deltaTime` 控制帧率无关的行为。
 - `FixedUpdate()` 不能用来检测输入（使用 Update）。
@@ -300,98 +489,16 @@ graph TD
 
 
 
-## 4. 场景管理与加载方式
-
-| 加载方式           | 说明                                                         | 使用场景                          |
-| ------------------ | ------------------------------------------------------------ | --------------------------------- |
-| `LoadScene()`      | 同步加载整个场景，主线程会卡顿                               | 体积小的场景或测试时              |
-| `LoadSceneAsync()` | 异步加载，不阻塞主线程，可显示加载进度                       | 正式项目推荐使用                  |
-| 多场景加载         | 使用 `SceneManager.LoadScene(mode=Additive)` 实现多个场景并存 | 场景分层管理（UI场景 + 逻辑场景） |
-
-------
-
-
-
-## 5. UI 系统（基于 UGUI）
-
-### 5.1 核心组件
-
-| 组件            | 功能说明                               |
-| --------------- | -------------------------------------- |
-| `Canvas`        | UI 渲染根容器，决定 UI 渲染方式        |
-| `RectTransform` | 控制 UI 元素的位置、缩放和锚点         |
-| UI 控件         | `Text`、`Image`、`Button`、`Slider` 等 |
-
-
-
-### 5.2 Canvas 渲染模式
-
-| 模式                   | 特点                                 | 应用场景               |
-| ---------------------- | ------------------------------------ | ---------------------- |
-| Screen Space - Overlay | 覆盖整个屏幕，无需摄像机             | 简单 UI、菜单          |
-| Screen Space - Camera  | 渲染在指定摄像机前方，支持景深等效果 | 动态 UI 与世界交互     |
-| World Space            | UI 位于 3D 世界中，像普通物体一样    | 游戏世界内的交互面板等 |
-
-
-
-### 5.3 屏幕适配
-
-- 使用 `CanvasScaler` 控制缩放模式。
-- 合理设置锚点和 Pivot，实现不同分辨率适配。
-- 建议使用 TextMeshPro 替代传统 Text，提供更清晰的字体渲染和多样化样式。
-
-------
-
-
-
-## 6. 渲染系统基础（简要）
-
-| 概念             | 说明                                      |
-| ---------------- | ----------------------------------------- |
-| 材质（Material） | 使用 Shader + 贴图控制外观                |
-| Shader           | 控制像素/顶点渲染逻辑，支持自定义视觉效果 |
-| 渲染管线         | 内置渲染管线（Built-in）、URP、HDRP       |
-| 光照模型         | 实时光照、烘焙光照、GI 全局光照           |
-
-------
-
-
-
-## 7. 输入系统
-
-- Unity 支持两套输入系统：
-  - 旧系统：`Input.GetKeyDown()`、`Input.GetAxis()` 等
-  - 新系统（Input System Package）：
-    - 更强的设备支持（手柄、触屏）
-    - 支持自定义 ActionMap、设备切换
-- 对复杂交互推荐使用 **新输入系统**
-
-------
-
-
-
-## 8. 资源管理与加载方式
-
-| 方式           | 特点说明                                   | 使用建议                     |
-| -------------- | ------------------------------------------ | ---------------------------- |
-| Resources.Load | 同步加载 Resources 文件夹中的资源          | 简单项目可用，不推荐大量使用 |
-| Addressables   | Unity 推荐的新资源系统，支持异步、远程加载 | 大项目/热更新项目推荐使用    |
-| AssetBundle    | 自定义打包方式，需手动管理依赖             | 老项目/自定义构建流程        |
-
-------
-
 
 
 ## 9. 其他核心系统简述
 
-| 系统       | 简要说明                               |
-| ---------- | -------------------------------------- |
-| Physics    | 通过 Collider + Rigidbody 实现物理模拟 |
-| Navigation | 使用 NavMesh 实现 AI 路径寻路          |
-| Timeline   | 控制动画、相机、对白等过场内容         |
-| Animation  | 使用 Animator 控制角色动画状态切换     |
-| Lighting   | 设置环境光、实时光、光照贴图等         |
-| Profiler   | 性能分析工具，查看每帧资源耗时         |
+| 系统            | 简要说明                         |                             图例                             |
+| --------------- | -------------------------------- | :----------------------------------------------------------: |
+| Navigation      | 使用 NavMesh 实现 AI 路径寻路    | <img src="Image/Navigation.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Lighting        | 设置环境光、实时光、光照贴图等   | <img src="Image/Lighting.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Particle System | 粒子系统、配合shader实现视觉特效 | <img src="Image/VFX.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Profiler        | 性能分析工具，查看每帧资源耗时间 | <img src="Image/Profiler.gif" style=" width: 300px; margin-right: 10px;" /> |
 
 ------
 
@@ -527,7 +634,7 @@ public void SetStepNode(StepBase target) {
 
 ### 3.3.2.脚本基本结构
 
-- Unity 脚本通常继承自 [`MonoBehaviour`](Image/mono.png)。
+- Unity 脚本通常继承自 [`MonoBehaviour`](Image/mono1.png)。
 - 主要包含以下生命周期函数：
 
 | 函数名      | 触发时机                 | 作用说明               |
@@ -544,7 +651,7 @@ public void SetStepNode(StepBase target) {
 
 > 面向对象是一种**构建逻辑模块和功能组件**的思维方式，核心在于将现实中的事物转换为**“对象”**，每个对象具有自己的属性与行为。
 
-### 3.4.1 基础概念-抽象：
+### 3.4.1 基础-抽象：
 
 > **抽象**指的是：从复杂的现实中提取“共同特征”，形成统一的逻辑模板，忽略无关细节。
 
@@ -564,12 +671,13 @@ public void SetStepNode(StepBase target) {
 - **单选、多选题**：点击选项
 - **下拉选择题**：从选项中挑选
 
-这些虽然形式不同，但其核心交互行为可以抽象为两个**基础类型**：
+这些虽然形式不同，但其核心交互行为可以抽象为三个**基础类型**：
 
-| 题型样式         | 抽象归类              |
-| ---------------- | --------------------- |
-| 填空、填表       | 输入类 `InputAnswer`  |
-| 单选、多选、下拉 | 选择类 `ToggleAnswer` |
+| 题型样式   | 抽象归类                |
+| ---------- | ----------------------- |
+| 填空、填表 | 输入类 `InputAnswer`    |
+| 单选、多选 | 选择类 `ToggleAnswer`   |
+| 下拉       | 下拉类 `DropdownAnswer` |
 
 这些题型可统一为两个核心类型：`输入类` 和 `选择类`，并共用统一的基类行为。
 
@@ -589,12 +697,15 @@ classDiagram
 
     class InputAnswer-填空类
     class ToggleAnswer-单选多选类
+    class DropdownAnswer-下拉类
     class FormDialog-表单
 
     BaseAnswer-父类 <|-- InputAnswer-填空类
     BaseAnswer-父类 <|-- ToggleAnswer-单选多选类
+    BaseAnswer-父类 <|-- DropdownAnswer-下拉类
     FormDialog-表单 --> InputAnswer-填空类
     FormDialog-表单 --> ToggleAnswer-单选多选类
+    FormDialog-表单 --> DropdownAnswer-下拉类
 ```
 
 ------
@@ -683,7 +794,7 @@ class ToggleAnswer : BaseAnswer {
 ```C#
 class FormDialog 
 {
-    List<BaseAnswer> baseAnswers;//例如： baseAnswers 存储了1个填空，2个多选，一个下拉
+    List<BaseAnswer> baseAnswers;//例如： baseAnswers 存储了1个填空，2个多选，1个下拉
 
     public override void OnClick(GameObject go)
     {
@@ -992,44 +1103,9 @@ flowchart LR
 
 ```
 
-
-
 #### 资源管理规范建议
 
 - 统一命名规则（如：`Textures/UI_Button.png`）
 - 目录结构清晰（区分 Models、Textures、Audio、Scripts）
 - 变动及时提交，避免大批量合并
 - 避免多人同时编辑同一资源，减少冲突
-
-
-
-## 2.场景/预制体编辑冲突
-
-#### 什么是编辑冲突？
-
-- 多人同时修改同一个场景文件（.unity）或预制体文件（.prefab），版本控制系统检测到文件内容不一致，导致合并失败或覆盖风险。
-
-#### 场景文件冲突特点
-
-- 场景是二进制或文本格式，但包含大量关联数据，冲突合并复杂且容易损坏。
-- 同一场景中不同开发者修改不同对象仍可能产生冲突。
-- 场景文件体积大，频繁提交也增加冲突概率。
-
-#### 预制体文件冲突特点
-
-- 预制体是游戏对象的模板，多个团队成员同时编辑同一预制体会导致版本冲突。
-- 预制体结构复杂，冲突时难以自动合并。
-
-####  解决方案与最佳实践
-
-| 方法                 | 说明                                                   |
-| -------------------- | ------------------------------------------------------ |
-| **分工明确**         | 避免多人同时编辑同一场景或预制体，指定负责人管理资源。 |
-| **拆分场景**         | 将大场景拆分为多个小场景，减少单文件编辑冲突。         |
-| **Prefab 化**        | 多用预制体分离复杂对象，减少场景中直接编辑内容。       |
-| **频繁提交更新**     | 小步快跑，减少大批量冲突概率。                         |
-| **使用场景合并工具** | 采用专业工具（如 Unity 的 Smart Merge）辅助解决冲突。  |
-| **及时沟通协调**     | 出现冲突时快速沟通，合理安排修改时序。                 |
-
-
-
