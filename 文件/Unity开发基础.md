@@ -227,20 +227,22 @@
 - 是一个容器，默认仅包含 `Transform` 组件。
 - 不能独立表现或交互，需通过组件赋能。
 
+<img src="Image/GameObject.png" style=" width: 600px; margin-left: 10px;"/>
+
 #### 1.2 Component（组件）
 
 - 附加在 GameObject 上的功能模块。
 - 控制对象行为、渲染外观、响应事件等。
 - 常见组件包括：
 
-|   类别   | 组件示例                         | 功能说明               |
-| :------: | :------------------------------- | ---------------------- |
-| **渲染** | `MeshRenderer`、`SpriteRenderer` | 显示模型、图片         |
-| **物理** | `Rigidbody`、`Collider` 系列     | 物理运动、碰撞检测     |
-| **音频** | `AudioSource`、`AudioListener`   | 播放声音、接收声音     |
-| **灯光** | `Light`                          | 提供光照               |
-| **动画** | `Animator`、`Animation`          | 控制动作、动画状态机   |
-| **脚本** | 自定义 MonoBehaviour 脚本        | 实现业务逻辑、事件响应 |
+|   类别   | 组件示例                       | 功能说明               | 图例                                                         |
+| :------: | :----------------------------- | ---------------------- | ------------------------------------------------------------ |
+| **渲染** | `MeshRenderer`、`MeshFilter`   | 显示模型               | <img src="Image/GameObjectCube.png" style=" width: 200px; margin-left: 10px;"/> |
+| **物理** | `Rigidbody`、`Collider` 系列   | 物理运动、碰撞检测     |                                                              |
+| **音频** | `AudioSource`、`AudioListener` | 播放声音、接收声音     |                                                              |
+| **灯光** | `Light`                        | 提供光照               | <img src="Image/GameObjectLight.png" style=" width: 200px; margin-left: 10px;"/> |
+| **动画** | `Animator`、`Animation`        | 控制动作、动画状态机   |                                                              |
+| **脚本** | 自定义 MonoBehaviour 脚本      | 实现业务逻辑、事件响应 |                                                              |
 
 #### 1.3 组件结构关系图（示意）
 
@@ -359,8 +361,8 @@ graph TD
 | 概念             | 说明                                                         |                                                              |                                                              |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 材质（Material） | 使用 Shader + 贴图控制外观                                   | <img src="Image/Material.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
-| Shader           | 控制像素/顶点渲染逻辑，支持自定义视觉效果                    | <img src="Image/Shader2.gif" style=" width: 300px; margin-right: 10px;"/> | <img src="Image/Shader1.gif" style=" width: 300px; margin-right: 10px;"/> |
-| 渲染管线         | 内置渲染管线（Built-in）、URP、HDRP                          |                                                              |                                                              |
+| Shader           | 控制像素/顶点渲染逻辑，支持自定义视觉效果                    | <img src="Shader/Heartfelt.gif" style=" width: 300px; margin-right: 10px;" /> | <img src="Image/Shader1.gif" style=" width: 200px; margin-right: 10px;"/><img src="Image/Shader2.gif" style=" width: 200px; margin-right: 10px;"/> |
+| 渲染管线         | 内置渲染管线（Built-in）、URP、HDRP                          | <img src="Image/XuanRan.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
 | 光照模型         | 实时光照、烘焙光照、混合光照、GI 全局光照                    | <img src="Image/LightModes.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
 | 屏幕后处理       | 增加真实感、风格统一，通过抗锯齿、模糊、锐化等技术改善画面细节 | <img src="Image/Houchuli.gif" style=" width: 300px; margin-right: 10px;"/> |                                                              |
 
@@ -489,25 +491,16 @@ animator.SetBool("isRun", true); // 驱动动画切换
 
 
 
-#### 注意事项
-
-- 使用 `Time.deltaTime` 控制帧率无关的行为。
-- `FixedUpdate()` 不能用来检测输入（使用 Update）。
-
-------
-
-
-
-
-
 ## 9. 其他核心系统简述
 
-| 系统            | 简要说明                         |                             图例                             |
-| --------------- | -------------------------------- | :----------------------------------------------------------: |
-| Navigation      | 使用 NavMesh 实现 AI 路径寻路    | <img src="Image/Navigation.gif" style=" width: 300px; margin-right: 10px;" /> |
-| Lighting        | 设置环境光、实时光、光照贴图等   | <img src="Image/Lighting.gif" style=" width: 300px; margin-right: 10px;" /> |
-| Particle System | 粒子系统、配合shader实现视觉特效 | <img src="Image/VFX.gif" style=" width: 300px; margin-right: 10px;" /> |
-| Profiler        | 性能分析工具，查看每帧资源耗时间 | <img src="Image/Profiler.gif" style=" width: 300px; margin-right: 10px;" /> |
+| 系统            | 简要说明                                           |                             图例                             |                                                              |
+| --------------- | -------------------------------------------------- | :----------------------------------------------------------: | ------------------------------------------------------------ |
+| Navigation      | 使用 NavMesh 实现 AI 路径寻路                      | <img src="Image/Navigation.gif" style=" width: 300px; margin-right: 10px;" /> | <img src="Image/Navigation1.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Lighting        | 设置环境光、实时光、光照贴图等                     | <img src="Image/Light1.gif" style=" width: 300px; margin-right: 10px;" /> | <img src="Image/Lighting.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Particle System | 粒子系统、配合shader实现视觉特效                   | <img src="Image/VFX.gif" style=" width: 300px; margin-right: 10px;" /> |                                                              |
+| LineRenderer    | 路径绘制、连接线、书写绘画、轨迹模拟               | <img src="Image/LineRenerer1.gif" style=" width: 300px; margin-right: 10px;" /> | <img src="Image/LineRenderer2.gif" style=" width: 300px; margin-right: 10px;" /> |
+| *Ray*           | 用于实现拖拽、射击、光线追踪、玩家视线检测等功能。 | <img src="Image/Ray.gif" style=" width: 300px; margin-right: 10px;" /> | <img src="Image/Ray1.gif" style=" width: 300px; margin-right: 10px;" /> |
+| Profiler        | 性能分析工具，查看每帧资源耗时间                   | <img src="Image/Profiler.gif" style=" width: 300px; margin-right: 10px;" /> |                                                              |
 
 ------
 
@@ -939,7 +932,7 @@ class FormDialog
 
 > 面向对象编程是 Unity 开发的基础，不仅体现在（如表单类）中，也广泛应用于步骤控制、API 接口封装等各类功能的实现。
 
-
+> 扩展：面向数据编程
 
 # 四、调试与测试常识
 
